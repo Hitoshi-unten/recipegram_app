@@ -1,0 +1,44 @@
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        レシピグラマー一覧
+      </h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <% @users.each do |user| %>
+        <div class="column is-3">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-image">
+                <figure class="image">
+                  <%= link_to user_path(user) do %>
+                  <!-- 画像をタッチしたらユーザーの詳細画面に行きたいのでuser_pathとする、詳細画面に行くときに誰の詳細画面に行くのかというのを指定しないといけないから@usersから一つ一つ取り出してuserという変数に入れているのでここはuserになる。 -->
+                    <%= attachment_image_tag user, :profile_image, fallback: "no-image.png" %>
+                  <% end %>
+                </figure>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <div class="title"><%=link_to user.username, user_path(user) %></div>
+                  <!-- ユーザーネームをタッチしても詳細画面に行きたいのでlink_to, user_pathと書く。これだけだとどんなユーザの画面に行くのか不明なので(user)と書く。 -->
+                </div>
+              </div>
+              <div class="content">
+                投稿数：あとで実装
+                <!-- 投稿数：はレシピを実装してから書く -->
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
