@@ -32,12 +32,6 @@
                     <%= link_to "編集", edit_user_path(@user), class: "button is-primary" %>
                   </td>
                 <% end %>
-                <!-- emailは個人情報なので他のユーザーには閲覧させたくない、詳細ページを見たときに自分の詳細ページではemailを表示する、他人の詳細ページではemailを表示しないようにする。 -->
-                <!-- deviseを使うとログインしているユーザーの情報はcurrent_userから取ってこれる。ログインしている人のidを取ってきたい場合はcurrent_user.idとする。 -->
-                <!-- もし、詳細画面を表示しているユーザーとcurrent_userが一致していたらemailを表示すると書く。 -->
-                <!-- <td>
-                    <%= link_to "編集", edit_user_path(@user), class: "button is-primary" %>
-                </td> -->
               </tr>
             </table>
             <table class="table is-fullwidth">
@@ -54,5 +48,51 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <% @user.recipes.each do |recipe| %>
+        <div class="colums is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <%= attachment_image_tag recipe, :image %>
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <%= link_to recipe_path(recipe), class: "panel-block" do %>
+                    <span class="panel-icon">
+                      <i class="fas fa-book" aria-hidden="true"></i>
+                    </span>
+                    このレシピを見る
+                  <% end %>
+                  <% if @user.id == current_user.id %>
+                    <%= link_to edit_recipe_path(recipe), class: "panel-block" do %>
+                      <span class="panel-icon">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      このレシピを編集する
+                    <% end %>
+                    <%= link_to recipe_path(recipe), method: :delete, deta: {confirm: "削除しますか？"}, class: "panel-block" do %>
+                      <span class="panel-icon">
+                        <i class="fas fa-trash"></i>
+                      </span>
+                      このレシピを削除する
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="content">
+                <time><%= recipe.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
 
 レシピの情報は後ほど実装。
