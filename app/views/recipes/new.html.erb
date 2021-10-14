@@ -8,6 +8,19 @@
   </div>
 </section>
 
+<% if @recipe.errors.any? %>
+<!-- @recipeに何らかのエラーメッセージがありますかというのを書く pluralizeメソッドは複数形とか単数形か判断してくれるメソッド、単数形の時はerror、複数形の時はerrorsと表示を変えたい-->
+<div class="notification is-danger">
+  <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this object from being saved: not successfully</h2>
+  <!-- @recipeのエラーメッセージをeachで回す、それをmessageという変数に入れて一つ一つ表示していくという書き方になっている -->
+    <ul>
+      <% @recipe.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <section class="section">
   <div class="container">
     <div class="columns is-centered">
